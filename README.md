@@ -11,6 +11,8 @@ https://github.com/swaiot/SSE-SDK-Android
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     implementation 'com.squareup.okio:okio:1.13.0'
 ~~~
+> SDK集成了第三方文件上传业务(百度Bos)，Swaiot开放平台会根据不同的开发者appkey生成不同的文件存储桶，该部分功能由于第三方文件上传业务需要收费，所以Swaiot开放平台会按照第三方云业务的标准向开发者进行收费．
+
 - 4 在工程AndroidManifest.xml代码中修改:
 ~~~ java
 <!--"FIXME: 此处从swaiot开放平台获得分配给到应用开发者的appkey"-->
@@ -56,7 +58,7 @@ https://github.com/swaiot/SSE-SDK-Android
      */
     public boolean connectSSE(String did,String uid);
 ~~~
-	
+
 ~~~java
 	/**
      * 重新连接SSE平台
@@ -66,13 +68,13 @@ https://github.com/swaiot/SSE-SDK-Android
      * @return
      */
     public boolean reConnectSSE(String did,String uid)；
-~~~	
+~~~
 ~~~java
 	  /**
      * @return true SSE已经连接成功,false 失败
      */
     public boolean isSSEConnected()；
-~~~	
+~~~
 ~~~java
 	/**
      * 发送消息给其他设备
@@ -83,7 +85,7 @@ https://github.com/swaiot/SSE-SDK-Android
      * @return true 成功加入发送队列，false 加入发送队列失败
      */
     public boolean sendMessage(String toDestDid,String msgId,String msgName,String message)；
-~~~	
+~~~
 ~~~java
 	/**
      * 该接口为异步接口，可以同时发给多个设备不同的文件。
