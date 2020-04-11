@@ -53,7 +53,7 @@ https://github.com/swaiot/SSE-SDK-Android
 	/**
      * 连接SSE平台
      * @param did 链接到IOTSSE平台的did 必须唯一，本机唯一did
-     * @param uid 链接到IOTSSE平台的uid，酷开用户唯一uid,可以为空
+     * @param uid 链接到IOTSSE平台的uid，swaiot生态用户唯一uid,可以为空
      * @return ture 成功,false 失败
      */
     public boolean connectSSE(String did,String uid);
