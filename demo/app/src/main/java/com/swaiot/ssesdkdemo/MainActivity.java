@@ -150,7 +150,9 @@ public class MainActivity extends AppCompatActivity {
                 // 即A设备APP上调用：connectSSE("unique_device_id_for_test_source_A","user-id");
                 // 即B设备APP上调用：connectSSE("unique_device_id_for_test_dest_B","user-id")；
                 // A和B设备都注册到了user-id上，此时A和B设备调用sendMessage才能够成功接收消息。
-                boolean isConnect = iotSSE.connectSSE("unique_device_id_for_test","");
+                // 对于APP来讲，可以由SDK生成UUID的方式，不传入id。
+//                boolean isConnect = iotSSE.connectSSE("unique_device_id_for_test","");
+                boolean isConnect = iotSSE.connectSSE();
                 boolean isSSEConnected = iotSSE.isSSEConnected();
                 TextView txtView = findViewById(R.id.txt_contet);
                 txtView.setText("call connectSSE  = " + isConnect + " and is ready = " + isSSEConnected);
@@ -164,7 +166,8 @@ public class MainActivity extends AppCompatActivity {
                 //FIXME: serial_number_id 可以是自增id，用于做消息追踪
                 // 通过外网的方式，发送消息给unique_device_id_for_test设备
                 // 此处模拟发送消息给到自己APP的unique_device_id_for_test
-                iotSSE.sendMessage("unique_device_id_for_test","serial_number_id","hello","hello,i am sender!");
+//                iotSSE.sendMessage("unique_device_id_for_test","serial_number_id","hello","hello,i am sender!");
+                iotSSE.sendMessage(iotSSE.readUniqueID(),"serial_number_id","hello","hello,i am sender!");
             }
         });
 
@@ -173,7 +176,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 重新连接到后台，断开一切长连接并进行重连
-                iotSSE.reConnectSSE("unique_device_id_for_test","");
+//                iotSSE.reConnectSSE("unique_device_id_for_test","");
+                // 如果connectSSE带参数，则reonnectSSE要带参数，如果connectSSE不带参数，reConnectSSE也不需要带参数
+                iotSSE.reConnectSSE();
             }
         });
 
@@ -187,7 +192,9 @@ public class MainActivity extends AppCompatActivity {
             // 上传文件到目标地址
             // syncFileToCloud的参数1是要发送的目标id，文件上传到云服务成功后会回调onSendFileToCloud，
             // 参数3是非常重要的参数，一般传的是connectSSE（）接口中传递的第一个参数，后台用该参数标识文件来源.
-                iotSSE.syncFileToCloud("unique_device_id_for_test-dest",bosFile,"unique_device_id_for_test");
+                // 此处测试，发送消息给自身，所以此处填入目标id= uniqueID。一般都是发到已之的对方ID
+//                iotSSE.syncFileToCloud("unique_device_id_for_test-dest",bosFile,"unique_device_id_for_test");
+                iotSSE.syncFileToCloud(iotSSE.readUniqueID(),bosFile,"unique_device_id_for_test");
             }
         });
     }
