@@ -49,8 +49,46 @@ https://github.com/swaiot/SSE-SDK-Android
      */
     public IotSSEMsgLib(Context context,IOTSSEMsgListener listener);
 ~~~
+
 ~~~java
 	/**
+     * 自动生成UUID作为唯一标识，连接SSE平台
+     * @return ture 成功,false 失败
+     */
+    public boolean connectSSE()；
+~~~
+
+~~~java
+	 /**
+     * 重新连接SSE平台
+     * 采用自动生成的UUID作为唯一标识进行重连接
+     * @return ture 成功,false 失败
+     */
+    public boolean reConnectSSE()；
+~~~
+
+~~~java
+	 /**
+     * 获得连接到SSE平台的唯一ID
+     * @return
+     */
+    public String readUniqueID()；
+~~~
+
+~~~java
+	/**
+     * 注册监听该用户下的所有iot设备的消息
+     * 该消息能够帮助APP接收到用于账号下的所有Swaiot-IOT设备状态变化的消息
+     * 会从onReceivedMessage方法中回调
+     * @param userID 从账号SDK当中获取到的用户uid
+     * @return
+     */
+    public void registerListenUsersIotMessage(final String userID);
+~~~
+
+~~~java
+	/**
+	 * 该方法需要APP自己管理运行在的设备上生成的id，建议使用上述两个接口,并从readUniqueID获得SDK给APP生成的ID，不要调用该方法；
      * 连接SSE平台
      * @param did 链接到IOTSSE平台的did 必须唯一，本机唯一did
      * @param uid 链接到IOTSSE平台的uid，swaiot生态用户唯一uid,可以为空
@@ -61,6 +99,7 @@ https://github.com/swaiot/SSE-SDK-Android
 
 ~~~java
 	/**
+	* 该方法需要APP自己管理运行在的设备上生成的id，建议使用上述两个接口,并从readUniqueID获得SDK给APP生成的ID，不要调用该方法；
      * 重新连接SSE平台
      * 在设备上的uid发生变化的时候，请调用该方法
      * @param did　必传，用于唯一标识设备消息接收，全网唯一ID

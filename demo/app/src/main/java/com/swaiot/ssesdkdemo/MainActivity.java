@@ -197,6 +197,8 @@ public class MainActivity extends AppCompatActivity {
                 iotSSE.syncFileToCloud(iotSSE.readUniqueID(),bosFile,"unique_device_id_for_test");
             }
         });
+
+        // 如果要收到
     }
 
     private boolean isSSEConnected(){
