@@ -81,10 +81,11 @@ https://github.com/swaiot/SSE-SDK-Android
      * 该消息能够帮助APP接收到用于账号下的所有Swaiot-IOT设备状态变化的消息
      * 会从onReceivedMessage方法中回调设备状态。
      * 注意： 该方法需要在onSSEStarted方法回调之后调用。
-     * @param userID 从账号SDK当中获取到的用户uid
+     * @param accessToken 从账号SDK当中获取到的用户token
+     * @param userID 从账号SDK当中获取到的用户id
      * @return
      */
-    public void registerListenUsersIotMessage(final String userID);
+    public void registerListenUsersIotMessage(final String accessToken,final String userID);
 ~~~
 
 ~~~java
