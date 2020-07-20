@@ -179,6 +179,18 @@ https://github.com/swaiot/SSE-SDK-Android
     public boolean sendMessage(String toDestDid,String msgId,String msgName,String message)；
 ~~~
 ~~~ java
+ /**
+     * 发送消息给小程序，由于小程序业务拿不到原始的did，单独封装发送接口，再转web-socket转发小程序
+     * 单独封装接口，后台业务进行对接，用于小程序业务,正常业务请勿调用，会发送失败
+     * @param msgId 发送的消息ｉｄ
+     * @param msgName　发送的消息名称
+     * @param message　发送的消息
+     * @return true 成功加入发送队列，false 加入发送队列失败
+     */
+    public boolean sendMessageWeChatMiniProg(String msgId,String msgName,String message)
+~~~
+
+~~~ java
 	/**
      * 该接口为异步接口，可以同时发给多个设备不同的文件。
      * 发送过程由onSendFileToCloud 进行回调
