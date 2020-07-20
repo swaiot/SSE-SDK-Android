@@ -76,46 +76,84 @@ https://github.com/swaiot/SSE-SDK-Android
 ~~~
 
 ~~~java
-	/**
-     * 注册监听该用户下的所有iot设备的消息
-     * 该消息能够帮助APP接收到用于账号下的所有Swaiot-IOT设备状态变化的消息
-     * 会从onReceivedMessage方法中回调设备状态。
-     * 注意： 该方法需要在onSSEStarted方法回调之后调用。
-     * @param accessToken 从账号SDK当中获取到的用户token
-     * @param userID 从账号SDK当中获取到的用户id
+	 /**
+     * 主动关闭SSE通道
      * @return
      */
-    public void registerListenUsersIotMessage(final String accessToken,final String userID);
+    public void close()
 ~~~
 
 ~~~java
 	/**
-	 * 该方法需要APP自己管理运行在的设备上生成的id，建议使用上述两个接口,并从readUniqueID获得SDK给APP生成的ID，不要调用该方法；
      * 连接SSE平台
+     * 标准接口，需要根据业务需要传递唯一ID
      * @param did 链接到IOTSSE平台的did 必须唯一，本机唯一did
-     * @param uid 链接到IOTSSE平台的uid，swaiot生态用户唯一uid,可以为空
      * @return ture 成功,false 失败
      */
-    public boolean connectSSE(String did,String uid);
+    public boolean connectSSE(String did)
 ~~~
 
 ~~~java
-	/**
-	* 该方法需要APP自己管理运行在的设备上生成的id，建议使用上述两个接口,并从readUniqueID获得SDK给APP生成的ID，不要调用该方法；
+	 /**
      * 重新连接SSE平台
-     * 在设备上的uid发生变化的时候，请调用该方法
-     * @param did　必传，用于唯一标识设备消息接收，全网唯一ID
-     * @param uid　可以为空，如果不为空，则发送方发送的消息给设备需要did&uid的完整组合才能确保接收到消息
+     * 在设备上的网络状态发生变化的时候，或者唯一的设备ID发生了变化，
+     * 请重新调用该接口
+     * @param did
      * @return
      */
-    public boolean reConnectSSE(String did,String uid)；
+    public boolean reConnectSSE(String did)
 ~~~
+~~~java
+ /**
+     * 以智慧屏的方式接入SSE
+     * 智慧屏的接入方式相比connectSSE接口，
+     * 相比connectSSE接口，云端会增加智慧屏好友列表设备在离线状态的消息推送，以及智慧屏业务相关的其他消息推送
+     * 用于PAD系统及酷开8.x系统上，普通第三方请勿使用
+     * @param screenID
+     * @return
+     */
+    public boolean connectSSEAsSmartScreen(String screenID)
+~~~
+
 ~~~java
 	  /**
      * @return true SSE已经连接成功,false 失败
      */
     public boolean isSSEConnected()；
 ~~~
+~~~java
+    /**
+     * 重新连接智慧屏SSE平台
+     * 在设备上的网络状态发生变化的时候，或者ScreenID发生变化的时候，
+     * 请重新调用该接口
+     * @param screenID
+     * @return
+     */
+    public boolean reConnectSSEAsSmartScreen(String screenID)
+~~~
+
+~~~java
+    /**
+     * 以 Swaiot-Iot设备的方式接入SSE
+     * Swaiot-Iot设备的接入方式相比connectSSE接口，会增加用户账号下的其他智能硬件设备状态变化的推送
+     * 可以用于小维智联监听所有账号下的其他IOT设备状态变化的推送情况
+     * @param did Iot设备标识
+     * @param accessToken swiaot-酷开账号系统获得的accessToken
+     * @param uid swaiot-酷开账号系统获得的uid
+     * @return
+     */
+    public boolean connectSSEAsIotDevice(String did,String accessToken,String uid)
+~~~
+~~~java
+   /**
+     * 以Swaiot-Iot设备的方式重新接入SSE平台
+     * 在设备上的网络状态发生变化的时候，请重新调用该接口
+     * @param did Iot设备标识
+     * @return
+     */
+    public boolean reConnectSSEAsIotDevice(String did,String accessToken,String uid)
+~~~
+
 ~~~java
 	/**
      * 发送消息给其他设备
@@ -156,11 +194,10 @@ https://github.com/swaiot/SSE-SDK-Android
         String appSalt();
 ~~~
 ~~~java
-        /**
+       /**
          * @param errEnum
-         *        错误为ConnectHostError的时候，表示无法访问网络，这种情况下一般是代表https接口请求错误；
-         *        错误为SSEDisconnectError的时候，表示SSE连接断开，APP需要重新判断网络状态并调用connect 接口
-         *        错误为SSESendError的时候，表示SSE发送失败，可能是当前帐号没有发送权限之类的
+         *        收到该错误的所有讯息，代表通道创建失败，需要关注失败的原因，
+         *        如果是网络问题，那么需要接收错误回调并制定自身app的重连机制和策略。
          */
         void onSSELibError(SSEErrorEnum errEnum,String errMessage);
 ~~~
