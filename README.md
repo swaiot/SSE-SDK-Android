@@ -20,7 +20,7 @@ https://github.com/swaiot/SSE-SDK-Android
 ~~~
 
 - 5 实现IotSSEMsgLib.IOTSSEMsgListener的监听,在监听代码中的实现接口中填如saltkey．
-~~~java
+~~~ java
 	/**
          *　由于apk反编译之后，容易从AndroidMenifest.xml读取到ａｋ和ｓｋ，其中ａｋ是公开的，
          *  sk是程序私有的，不能被第三方获取。最好写在混淆的程序当中。
@@ -37,7 +37,7 @@ https://github.com/swaiot/SSE-SDK-Android
 ##### API说明
 
 ###### IotSSEMsgLib 类API
-~~~java
+~~~ java
 	/**
      * 接入到IOT的SSE平台
      *   默认从配置文件读取application（区域） xml当中的配置文件，请务必填写，否则无法使用
@@ -50,7 +50,7 @@ https://github.com/swaiot/SSE-SDK-Android
     public IotSSEMsgLib(Context context,IOTSSEMsgListener listener);
 ~~~
 
-~~~java
+~~~ java
  /**
      * 接入到IOT的SSE平台
      *   默认从配置文件读取application（区域） xml当中的配置文件，请务必填写，否则无法使用
@@ -63,7 +63,7 @@ https://github.com/swaiot/SSE-SDK-Android
     public IotSSEMsgLib(Context context,IOTSSEMsgListener_WMP listener)
 ~~~
 
-~~~java
+~~~ java
 	/**
      * 自动生成UUID作为唯一标识，连接SSE平台
      * @return ture 成功,false 失败
@@ -80,7 +80,7 @@ https://github.com/swaiot/SSE-SDK-Android
     public boolean reConnectSSE()；
 ~~~
 
-~~~java
+~~~ java
 	 /**
      * 获得连接到SSE平台的唯一ID
      * @return
@@ -88,7 +88,7 @@ https://github.com/swaiot/SSE-SDK-Android
     public String readUniqueID()；
 ~~~
 
-~~~java
+~~~ java
 	 /**
      * 主动关闭SSE通道
      * @return
@@ -96,7 +96,7 @@ https://github.com/swaiot/SSE-SDK-Android
     public void close()
 ~~~
 
-~~~java
+~~~ java
 	/**
      * 连接SSE平台
      * 标准接口，需要根据业务需要传递唯一ID
@@ -106,7 +106,7 @@ https://github.com/swaiot/SSE-SDK-Android
     public boolean connectSSE(String did)
 ~~~
 
-~~~java
+~~~ java
 	 /**
      * 重新连接SSE平台
      * 在设备上的网络状态发生变化的时候，或者唯一的设备ID发生了变化，
@@ -116,7 +116,7 @@ https://github.com/swaiot/SSE-SDK-Android
      */
     public boolean reConnectSSE(String did)
 ~~~
-~~~java
+~~~ java
  /**
      * 以智慧屏的方式接入SSE
      * 智慧屏的接入方式相比connectSSE接口，
@@ -128,13 +128,13 @@ https://github.com/swaiot/SSE-SDK-Android
     public boolean connectSSEAsSmartScreen(String screenID)
 ~~~
 
-~~~java
+~~~ java
 	  /**
      * @return true SSE已经连接成功,false 失败
      */
     public boolean isSSEConnected()；
 ~~~
-~~~java
+~~~ java
     /**
      * 重新连接智慧屏SSE平台
      * 在设备上的网络状态发生变化的时候，或者ScreenID发生变化的时候，
@@ -145,7 +145,7 @@ https://github.com/swaiot/SSE-SDK-Android
     public boolean reConnectSSEAsSmartScreen(String screenID)
 ~~~
 
-~~~java
+~~~ java
     /**
      * 以 Swaiot-Iot设备的方式接入SSE
      * Swaiot-Iot设备的接入方式相比connectSSE接口，会增加用户账号下的其他智能硬件设备状态变化的推送
@@ -157,7 +157,7 @@ https://github.com/swaiot/SSE-SDK-Android
      */
     public boolean connectSSEAsIotDevice(String did,String accessToken,String uid)
 ~~~
-~~~java
+~~~ java
    /**
      * 以Swaiot-Iot设备的方式重新接入SSE平台
      * 在设备上的网络状态发生变化的时候，请重新调用该接口
@@ -167,7 +167,7 @@ https://github.com/swaiot/SSE-SDK-Android
     public boolean reConnectSSEAsIotDevice(String did,String accessToken,String uid)
 ~~~
 
-~~~java
+~~~ java
 	/**
      * 发送消息给其他设备
      * @param toDestDid 发送到的设备ｉd
@@ -178,7 +178,7 @@ https://github.com/swaiot/SSE-SDK-Android
      */
     public boolean sendMessage(String toDestDid,String msgId,String msgName,String message)；
 ~~~
-~~~java
+~~~ java
 	/**
      * 该接口为异步接口，可以同时发给多个设备不同的文件。
      * 发送过程由onSendFileToCloud 进行回调
@@ -188,7 +188,7 @@ https://github.com/swaiot/SSE-SDK-Android
      */
     public void syncFileToCloud(String toDestDid, File sendFile,String uid)；
 ~~~
-~~~java
+~~~ java
 	/**
      * 从云端同步文件，该接口为异步接口，可同时同步多个文件
      * @param fileKey onSendFileToCloud 完成时候，回调的fileKey
@@ -198,7 +198,7 @@ https://github.com/swaiot/SSE-SDK-Android
 ~~~
 
 ###### IotSSEMsgLib.IOTSSEMsgListener_WMP
-~~~java
+~~~ java
  /**
 * 小程序业务没有真实的目标id，所以增加了一个监听接口继承于IOTSSEMsgListener
 * 小程序相关的业务在初始化IotSSEMsgLib类的时候，请传递该listner，否则发送结果无法监听
@@ -212,7 +212,7 @@ https://github.com/swaiot/SSE-SDK-Android
 ~~~
 
 ###### IotSSEMsgLib.IOTSSEMsgListener 回调API
-~~~java
+~~~ java
 	/**
          *　由于apk反编译之后，容易从AndroidMenifest.xml读取到ａｋ和ｓｋ，其中ａｋ是公开的，
          *  sk是程序私有的，不能被第三方获取。最好写在混淆的程序当中。
@@ -220,7 +220,7 @@ https://github.com/swaiot/SSE-SDK-Android
          */
         String appSalt();
 ~~~
-~~~java
+~~~ java
        /**
          * @param errEnum
          *        收到该错误的所有讯息，代表通道创建失败，需要关注失败的原因，
@@ -228,13 +228,13 @@ https://github.com/swaiot/SSE-SDK-Android
          */
         void onSSELibError(SSEErrorEnum errEnum,String errMessage);
 ~~~
-~~~java
+~~~ java
         /**
          * 调用connectSSE　成功之后，会回调该接口
          */
         void onSSEStarted();
 ~~~
-~~~java
+~~~ java
         /**
          * 发送SSE消息给到目标设备，是否成功的回调
          * @param sendResult　是否在线
@@ -245,7 +245,7 @@ https://github.com/swaiot/SSE-SDK-Android
          */
         void onSendResult(SSESendResultEnum sendResult,String destId,String msgId,String msgName,String message);
 ~~~
-~~~java
+~~~ java
         /**
          * 接收到其他设备发过来的消息
          * @param msgId 　消息ｉｄ
@@ -254,7 +254,7 @@ https://github.com/swaiot/SSE-SDK-Android
          */
         void onReceivedSSEMessage(String msgId,String msgName,String message);
 ~~~
-~~~java
+~~~ java
         /**
          * 发送方回调传输文件的进度
          * @param sendFileResult 回调传输文件的result，SENDFILE_ERROR = 发送错误, SENDFILE_ONPROGRESS=正在发送进程, SENDFILE_FINISHED=发送完成
@@ -267,7 +267,7 @@ https://github.com/swaiot/SSE-SDK-Android
          */
         void onSendFileToCloud(SendFileResultEnum sendFileResult,String fileKey, long currentSize, long totalSize,int respCode,String respMsg,String toDestId);
 ~~~
-~~~java
+~~~ java
         /**
          * 接受方启动文件接收进程的回调
          * @param receFileResult 接收的结果
