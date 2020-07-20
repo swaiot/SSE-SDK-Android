@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
      * 开发者将从开放平台获得到的appSalt填入到appSalt()函数当中。
      * 所有的回调函数都运行于线程之中，请注意不要直接绘制主线程UI。
      */
-    public class CustomIotSSEMsgListener implements IotSSEMsgLib.IOTSSEMsgListener{
+    public class CustomIotSSEMsgListener implements IotSSEMsgLib.IOTSSEMsgListener_WMP{
 
         MainActivity mainActivity;
         public CustomIotSSEMsgListener(MainActivity activity){
@@ -125,6 +125,11 @@ public class MainActivity extends AppCompatActivity {
             Log.i("sse-lib","onReceivedFileFromCloud receFileResult="+receFileResult+"  fileKey=" +fileKey + " currentSize=" +currentSize +" totalSize="+totalSize +" url="+url);
 
         }
+
+        @Override
+        public void onSendWMPResult(IotSSEMsgLib.SSESendResultEnum sseSendResultEnum, String msgId, String msgName, String message) {
+            Log.i("sse-lib","onSendWMPResult =" + sseSendResultEnum +  " msgId="+msgId+" msgName="+msgName+" message= " +message );
+        }
     }
 
     private IotSSEMsgLib iotSSE; // SSE实时消息通信库
@@ -167,7 +172,8 @@ public class MainActivity extends AppCompatActivity {
                 // 通过外网的方式，发送消息给unique_device_id_for_test设备
                 // 此处模拟发送消息给到自己APP的unique_device_id_for_test
 //                iotSSE.sendMessage("unique_device_id_for_test","serial_number_id","hello","hello,i am sender!");
-                iotSSE.sendMessage(iotSSE.readUniqueID(),"serial_number_id","hello","hello,i am sender!");
+//                iotSSE.sendMessage(iotSSE.readUniqueID(),"serial_number_id","hello","hello,i am sender!");
+                iotSSE.sendMessageWeChatMiniProg("serial_number_id","hello","hello,i am sender!");
             }
         });
 
