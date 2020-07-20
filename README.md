@@ -51,6 +51,19 @@ https://github.com/swaiot/SSE-SDK-Android
 ~~~
 
 ~~~java
+ /**
+     * 接入到IOT的SSE平台
+     *   默认从配置文件读取application（区域） xml当中的配置文件，请务必填写，否则无法使用
+     *   <meta-data
+     *      android:name="com.skyworthiot.sselib.APPKEY"
+     *      android:value="xxx"/>
+     * @param context android执行环境上下文
+     * @param listener IOTSSEMsgListener_WMP 回调，小程序业务专用
+     */
+    public IotSSEMsgLib(Context context,IOTSSEMsgListener_WMP listener)
+~~~
+
+~~~java
 	/**
      * 自动生成UUID作为唯一标识，连接SSE平台
      * @return ture 成功,false 失败
@@ -182,6 +195,20 @@ https://github.com/swaiot/SSE-SDK-Android
 	 * 该fileKey是发送方调用syncFileToCloud之后接受到的消息，然后发送方再调用sendMessage接口将fileKey传递给消息接收方，接收方完成文件下载．会将文件存储于应用纱盒的cache目录
      */
     public void syncFileFromCloud(String fileKey)
+~~~
+
+###### IotSSEMsgLib.IOTSSEMsgListener_WMP
+~~~java
+ /**
+* 小程序业务没有真实的目标id，所以增加了一个监听接口继承于IOTSSEMsgListener
+* 小程序相关的业务在初始化IotSSEMsgLib类的时候，请传递该listner，否则发送结果无法监听
+         * 发送SSE消息给到小程序，是否成功的回调
+         * @param result　是否在线，代表接口成功，并非小程序真实在线，仅仅是后台业务与小程序业务完成了调用逻辑。
+         * @param msgId 发送的消息id
+         * @param msgName 发送的消息名称
+         * @param message　发生的消息
+         */
+ void onSendWMPResult(SSESendResultEnum result,String msgId,String msgName,String message);
 ~~~
 
 ###### IotSSEMsgLib.IOTSSEMsgListener 回调API
