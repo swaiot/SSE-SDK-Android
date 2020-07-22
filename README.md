@@ -237,6 +237,7 @@ https://github.com/swaiot/SSE-SDK-Android
          * @param errEnum
          *        收到该错误的所有讯息，代表通道创建失败，需要关注失败的原因，
          *        如果是网络问题，那么需要接收错误回调并制定自身app的重连机制和策略。
+         * **请注意，重联策略需要1-3-5-7-9...2min然后进行重联尝试**，否则会被后台认定ddos攻击屏蔽请求。
          */
         void onSSELibError(SSEErrorEnum errEnum,String errMessage);
 ~~~
