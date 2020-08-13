@@ -19,3 +19,10 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class com.getkeepsafe.** { *; }
+-keep class com.github.KeepSafe.** { *; }
+-keep class com.skyworthiot.** { *; }
+-keep interface com.skyworthiot.** { *; }
+-dontwarn com.baidubce.**
+-keep class com.baidubce.** { *; }
+-keep interface com.baidubce.** { *; }
