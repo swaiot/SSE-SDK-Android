@@ -1,11 +1,14 @@
 package com.swaiot.ssesdkdemo;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.skyworthiot.iotssemsg.IotSSEMsgLib;
@@ -15,10 +18,31 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 
 public class MainActivity extends AppCompatActivity {
 
+    boolean isDestroyed = false;
 
+    class ReconnectHandler extends Handler{
+        private SoftReference<IotSSEMsgLib> mSSELib;
+        public ReconnectHandler(IotSSEMsgLib msgLib) {
+            super();
+            mSSELib = new SoftReference<IotSSEMsgLib>(msgLib);
+        }
+
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            if(0 == msg.what){
+                if(null!=mSSELib.get()){
+                    mSSELib.get().reConnectSSE();
+                }
+            }
+        }
+    }
+    ReconnectHandler mHandler;
     /**
      *  sdk 监听函数
      * FIXME:
@@ -52,6 +76,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onSSELibError(IotSSEMsgLib.SSEErrorEnum errEnum, String errMsg) {
             Log.i("sse-lib","sseErrorEnum = " + errEnum + " msg = "+ errMsg);
+            if(!isDestroyed){
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!mHandler.hasMessages(0)){
+                            // 每隔10s触发重连，策略可以另外处理
+                            Message msg = new Message();
+                            msg.what = 0;
+                            mHandler.sendMessageDelayed(msg,10000);
+                        }
+                    }
+                });
+            }
         }
 
         /**
@@ -143,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
 
         customerListener = new CustomIotSSEMsgListener(this);
         iotSSE = new IotSSEMsgLib(getApplicationContext(),customerListener);
+        mHandler = new ReconnectHandler(iotSSE);
 
         Button btnConnect = findViewById(R.id.button_connect);
         btnConnect.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                 // 重新连接到后台，断开一切长连接并进行重连
 //                iotSSE.reConnectSSE("unique_device_id_for_test","");
                 // 如果connectSSE带参数，则reonnectSSE要带参数，如果connectSSE不带参数，reConnectSSE也不需要带参数
-                iotSSE.reConnectSSE();
+                iotSSE.close();
             }
         });
 
@@ -205,6 +243,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // 如果要收到
+    }
+
+    @Override
+    protected void onDestroy() {
+        isDestroyed = true;
+        if(iotSSE!=null && iotSSE.isSSEConnected()){
+            iotSSE.close();
+        }
+        super.onDestroy();
     }
 
     private boolean isSSEConnected(){
