@@ -19,6 +19,7 @@
 
         <!--"FIXME: 此处从swaiot开放平台获得分配给到应用开发者的appkey"-->
         <meta-data android:name="com.skyworthiot.sselib.APPKEY" android:value= ""/>
+        <meta-data android:name="com.skyworthiot.sselib.HOSTADDRESS" android:value=""/>
 
     </application>
 

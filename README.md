@@ -16,7 +16,8 @@ https://github.com/swaiot/SSE-SDK-Android
 - 4 在工程AndroidManifest.xml代码中修改:
 ~~~ java
 <!--"FIXME: 此处从swaiot开放平台获得分配给到应用开发者的appkey"-->
-        <meta-data android:name="com.skyworthiot.sselib.APPKEY" android:value= ""/> -->
+        <meta-data android:name="com.skyworthiot.sselib.APPKEY" android:value= ""/> 
+        <meta-data android:name="com.skyworthiot.sselib.HOSTADDRESS" android:value="https://eduapi.skyworthiot.com"/>
 ~~~
 
 - 5 实现IotSSEMsgLib.IOTSSEMsgListener的监听,在监听代码中的实现接口中填如saltkey．
@@ -44,8 +45,15 @@ https://github.com/swaiot/SSE-SDK-Android
      *   <meta-data
      *      android:name="com.skyworthiot.sselib.APPKEY"
      *      android:value="xxx"/>
-     * @param context  Android上下文Context
-	 * @param listener   IotSSEMsgLib.IOTSSEMsgListener的监听对象
+     *
+     *  各个业务平台业务增长迅猛，可能会挤占其他业务的服务器资源，需要做业务切割，针对每个业务的费用单独计费
+     *  比如，教育小微/少儿影视小维就是如下的host地址： https://eduapi.skyworthiot.com
+     *   <meta-data
+     *      android:name="com.skyworthiot.sselib.HOSTADDRESS"
+     *      android:value="https://eduapi.skyworthiot.com"/>
+     *
+     * @param context android执行环境上下文
+     * @param listener IOTSSEMsgListener 回调，sse执行过程的回调
      */
     public IotSSEMsgLib(Context context,IOTSSEMsgListener listener);
 ~~~
@@ -57,8 +65,15 @@ https://github.com/swaiot/SSE-SDK-Android
      *   <meta-data
      *      android:name="com.skyworthiot.sselib.APPKEY"
      *      android:value="xxx"/>
+     *
+     *  各个业务平台业务增长迅猛，可能会挤占其他业务的服务器资源，需要做业务切割，针对每个业务的费用单独计费
+     *  比如，教育小微/少儿影视小维就是如下的host地址： https://eduapi.skyworthiot.com
+     *   <meta-data
+     *      android:name="com.skyworthiot.sselib.HOSTADDRESS"
+     *      android:value="https://eduapi.skyworthiot.com"/>
+     *
      * @param context android执行环境上下文
-     * @param listener IOTSSEMsgListener_WMP 回调，小程序业务专用
+     * @param listener IOTSSEMsgListener 回调，sse执行过程的回调
      */
     public IotSSEMsgLib(Context context,IOTSSEMsgListener_WMP listener)
 ~~~
